@@ -1,14 +1,20 @@
 @tailwind base;
-@tailwind components; 
+@tailwind components;
 @tailwind utilities;
 
-
-body{
-    @apply bg-gray-50
+input,
+textarea,
+button {
+    @apply font-Inter text-gray-500 font-medium
 }
 
-body, input textarea, button {
-    @apply font-medium text-gray-500 font-sans
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    @apply font-Lexend text-gray-800 font-semibold
 }
 
 h1 {
@@ -21,5 +27,4 @@ h2 {
 
 button {
     @apply cursor-pointer
-
 }
