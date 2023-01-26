@@ -1,8 +1,21 @@
+import Image from "next/image"
+
+import Playing from '../../public/playing.svg'
+import Shuffle from '../../public/shuffle.svg'
+import PlayPrevious from '../../public/play-previous.svg'
+import Play from '../../public/play.svg'
+import PlayNext from '../../public/play-next.svg'
+import Repeat from '../../public/repeat.svg'
+
 export function Player() {
     return (
         <div className="w-104 h-screen py-12 px-16 bg-purple-500 text-white flex flex-col items-center justify-between">
             <header className="flex items-center gap-4">
-                <img src="/playing.svg" alt="Tocando agora" />
+                <Image
+                    src={Playing}
+                    alt="Tocando agora"
+                />
+
                 <strong className="font-Lexend font-semibold">
                     Tocando agora
                 </strong>
@@ -26,23 +39,38 @@ export function Player() {
 
                 <div className="flex items-center justify-center mt-10 gap-6">
                     <button type="button" className="bg-transparent">
-                        <img src="/shuffle.svg" alt="Embaralhar" />
+                        <Image
+                            src={Shuffle}
+                            alt="Embaralhar"
+                        />
                     </button>
 
                     <button>
-                        <img src="/play-previous.svg" alt="Tocar anterior" />
+                        <Image
+                            src={PlayPrevious}
+                            alt="Tocar anterior"
+                        />
                     </button>
 
                     <button className="w-16 h-16 rounded-2xl bg-purple-400 flex items-center justify-center">
-                        <img src="play.svg" alt="Tocar" />
+                        <Image
+                            src={Play}
+                            alt="Tocar"
+                        />
                     </button>
 
                     <button>
-                        <img src="/play-next.svg" alt="Tocar próxima" />
+                        <Image
+                            src={PlayNext}
+                            alt="Tocar próxima"
+                        />
                     </button>
 
                     <button>
-                        <img src="/repeat.svg" alt="Repetir" />
+                        <Image
+                            src={Repeat}
+                            alt="Repetir"
+                        />
                     </button>
                 </div>
             </footer>

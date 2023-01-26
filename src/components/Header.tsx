@@ -1,3 +1,6 @@
+import Image from 'next/image'
+import Logo from '../../public/logo.svg'
+
 import format from "date-fns/format"
 import ptBR from "date-fns/locale/pt-BR"
 
@@ -7,9 +10,11 @@ export function Header() {
     })
 
     return (
-        <header className="bg-white h-28 flex items-center py-8 px-16 border border-solid border-gray-100">
-            <img
-                src="/logo.svg"
+        <header
+            className="bg-white h-28 flex items-center py-8 px-16 border border-solid border-gray-100"
+        >
+            <Image
+                src={Logo}
                 alt=""
             />
 
