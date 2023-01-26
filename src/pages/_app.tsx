@@ -1,6 +1,9 @@
 import type { AppProps } from 'next/app'
 import '../styles/globals.css'
 
+import { Header } from "@/components/Header"
+import { Player } from "@/components/Player"
+
 import { Inter, Lexend } from '@next/font/google'
 
 const inter = Inter({
@@ -15,8 +18,14 @@ const lexend = Lexend({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${inter.variable} ${lexend.variable} font-sans`}>
-      <Component {...pageProps} />
-    </main>
+    <div className={`${inter.variable} ${lexend.variable} font-sans flex`}>
+
+      <main className='flex-1'>
+        <Header />
+        <Component {...pageProps} />
+      </main>
+
+      <Player />
+    </div>
   )
 }

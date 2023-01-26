@@ -10,12 +10,19 @@ module.exports = {
       fontSize: {
         '3xl': '2rem',
       },
+      width: {
+        '104': '26rem',
+      },
       fontFamily: {
         Inter: ['var(--font-inter)', ...fontFamily.sans],
         Lexend: ['var(--font-lexend)', ...fontFamily.sans]
       },
+      backgroundImage: {
+        'player-gradient': 'linear-gradient(143.8deg, rgba(145,100,250,0.8) 0%, rgba(0,0,0,0) 100%)'
+      }
     },
     colors: {
+      transparent: "transparent",
       white: "#FFF",
       gray: {
         50: "#F7F8FA",
