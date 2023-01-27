@@ -1,9 +1,14 @@
+// Libs
+import { format, parseISO } from 'date-fns'
+import ptBR from "date-fns/locale/pt-BR";
+
+// Next Components and props
 import { GetStaticProps } from "next"
 import Link from "next/link";
 import Image from 'next/image'
-import { format, parseISO } from 'date-fns'
+
+// utils
 import { api } from "@/services/api";
-import ptBR from "date-fns/locale/pt-BR";
 import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString";
 
 import PlayGreen from '../../public/play-green.svg'
@@ -92,38 +97,40 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         </h2>
 
         <table cellSpacing={0} className="w-full">
-          <tbody>
+          {/* https://github.com/vercel/next.js/discussions/36754Hydration  */}
+          <thead>
             <tr>
-            <th
-              className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+              <th
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
 
-            </th>
+              </th>
 
-            <th
-              className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
-              Podcast
-            </th>
+              <th
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                Podcast
+              </th>
 
-            <th
-              className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
-              Integrantes
-            </th>
+              <th
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                Integrantes
+              </th>
 
-            <th
-              className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
-              Data
-            </th>
+              <th
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                Data
+              </th>
 
-            <th
-              className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
-              Duração
-            </th>
+              <th
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                Duração
+              </th>
 
-            <th
-              className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left"></th>
-          </tr>
+              <th
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left"></th>
+            </tr>
+          </thead>
 
-
+          <tbody>
             {allEpisodes.map(episode => {
               return (
                 <tr key={episode.id}>
@@ -139,12 +146,13 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   </td>
 
                   <td>
-                    <a
-                      href=""
-                      className="text-gray-800 font-Lexend font-semibold leading-6 text-base hover:underline"
-                    >
-                      {episode.title}
-                    </a>
+                    <Link href={`/episodes/${episode.id}`} legacyBehavior>
+                      <a
+                        className="text-gray-800 font-Lexend font-semibold leading-6 text-base hover:underline"
+                      >
+                        {episode.title}
+                      </a>
+                    </Link>
                   </td>
 
                   <td>
