@@ -28,3 +28,40 @@ h2 {
 button {
     @apply cursor-pointer
 }
+
+th,
+td {
+    @apply py-3 px-4 border-b border-gray-100
+}
+
+td {
+    @apply text-sm
+}
+
+body {
+    -webkit-font-smoothing: antialiesad;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #6F48C9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #F7F8FA;
+    border-radius: 100vh;
+    border: 1px solid #AFB2B1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9d8bca;
+}
+
+::-ms-reveal {
+    display: none;
+}

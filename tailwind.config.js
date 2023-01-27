@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      maxWidth: {
+        '7/10': '70%',
+      },
       fontSize: {
         '3xl': '2rem',
       },
@@ -32,7 +35,7 @@ module.exports = {
         800: "#494D4B",
       },
       green: {
-        500: "#04D361"
+        500: "#04D361" 
       },
       purple: {
         300: "#9F75FF",
