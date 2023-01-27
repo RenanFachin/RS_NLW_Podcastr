@@ -1,9 +1,19 @@
 import { GetStaticProps } from "next"
+import { format, parseISO } from 'date-fns'
+import { api } from "@/services/api";
+import ptBR from "date-fns/locale/pt-BR";
+import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString";
 
 type Episode = {
   id: string;
   title: string;
-  member: string;
+  thumbnail: string;
+  members: string;
+  published_at: string;
+  description: string;
+  duration: number;
+  durationAsString: number;
+  url: string;
 }
 
 
@@ -11,20 +21,63 @@ type HomeProps = {
   episodes: Episode[]
 }
 
-export default function Home(props: HomeProps) {
+export default function Home(episodes: HomeProps) {
+  console.log(episodes)
+
   return (
     <div className="">
+      <p>{JSON.stringify(episodes)}</p>
     </div>
   )
 }
 
+
+
+
+
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('http://localhost:3333/episodes?_limit=12&_sort=published_at&_order=desc')
-  const data = await response.json()
+  const { data } = await api.get('episodes', {
+    params: {
+      _limit: 12,
+      _sort: 'published_at',
+      _order: 'desc'
+    }
+  })
+
+  // tipando o que vem da API
+  interface episodeProps {
+    id: string;
+    title: string;
+    thumbnail: string;
+    members: string;
+    published_at: string;
+    description: string;
+    file: {
+      duration: number;
+      durationAsString: number;
+      url: string;
+    }
+  }
+
+  // Formatando o que vem da API antes de chamar dentro do return da página
+  const episodes = data.map((episode: episodeProps) => {
+    return {
+      id: episode.id,
+      title: episode.title,
+      thumbnail: episode.thumbnail,
+      members: episode.members,
+      publishedAt: format(parseISO(episode.published_at), 'd MMM yy', { locale: ptBR }),
+      duration: Number(episode.file.duration),
+      durationAsString: convertDurationToTimeString(Number(episode.file.duration)),
+      description: episode.description,
+      url: episode.file.url
+    }
+  })
+
 
   return {
     props: {
-      episodes: data,
+      episodes: episodes,
     },
     revalidate: 60 * 60 * 8
   }
