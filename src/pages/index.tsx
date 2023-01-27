@@ -16,17 +16,40 @@ type Episode = {
   url: string;
 }
 
-
 type HomeProps = {
-  episodes: Episode[]
+  latestEpisodes: Episode[]
+  allEpisodes: Episode[]
 }
 
-export default function Home(episodes: HomeProps) {
-  console.log(episodes)
+export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+  console.log(latestEpisodes)
 
   return (
     <div className="">
-      <p>{JSON.stringify(episodes)}</p>
+      <section className="">
+        <h2>
+          Ultimos lançamentos
+        </h2>
+
+        {/* Pegando apenas os 2 últimos episódios - DICA: fazer dois returns diferentes da API*/}
+        <ul>
+          {
+            latestEpisodes.map(episode => {
+              return (
+                <li key={episode.id}>
+                  <a href="">
+                    {episode.title}
+                  </a>
+                </li>
+              )
+            })
+          }
+        </ul>
+      </section>
+
+
+
+      <section className=""></section>
     </div>
   )
 }
@@ -75,9 +98,14 @@ export const getStaticProps: GetStaticProps = async () => {
   })
 
 
+  // Criando uma variável para receber apenas os 2 últimos episódios e retornando como props
+  const latestEpisodes = episodes.slice(0, 2)
+  const allEpisodes = episodes.slice(2, episodes.length)
+
   return {
     props: {
-      episodes: episodes,
+      latestEpisodes,
+      allEpisodes
     },
     revalidate: 60 * 60 * 8
   }
