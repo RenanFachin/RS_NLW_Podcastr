@@ -1,4 +1,5 @@
 import { GetStaticProps } from "next"
+import Link from "next/link";
 import Image from 'next/image'
 import { format, parseISO } from 'date-fns'
 import { api } from "@/services/api";
@@ -25,11 +26,10 @@ type HomeProps = {
 }
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
-  console.log(latestEpisodes)
 
   return (
     <div className="px-16 h-[calc(100vh_-_7rem)] overflow-y-scroll">
-      <section className="">
+      <section>
         <h2 className="mt-12 mb-6">
           Ultimos lançamentos
         </h2>
@@ -50,13 +50,15 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   />
 
                   <div className="flex-1 ml-4">
-                    <a href="" className="block text-gray-800 font-Lexend font-semibold leading-6 hover:underline">
-                      {episode.title}
-                    </a>
+                    <Link href={`/episodes/${episode.id}`} legacyBehavior>
+                      <a className="block text-gray-800 font-Lexend font-semibold leading-6 hover:underline">
+                        {episode.title}
+                      </a>
+                    </Link>
 
-                    <p className="text-xs mt-2 max-w-7/10 whitespace-nowrap overflow-hidden text-ellipsis">
+                    <span className="text-xs mt-2 max-w-7/10 whitespace-nowrap overflow-hidden text-ellipsis">
                       {episode.members}
-                    </p>
+                    </span>
 
                     <span className="inline-block mt-2 text-xs">
                       {episode.publishedAt}
@@ -90,7 +92,8 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         </h2>
 
         <table cellSpacing={0} className="w-full">
-          <thead>
+          <tbody>
+            <tr>
             <th
               className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
 
@@ -118,9 +121,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
             <th
               className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left"></th>
-          </thead>
+          </tr>
 
-          <tbody>
+
             {allEpisodes.map(episode => {
               return (
                 <tr key={episode.id}>

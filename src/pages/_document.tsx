@@ -4,9 +4,7 @@ export default class MyDocument extends Document {
   render(){
     return (
       <Html lang="en">
-        <Head>
-          <title>NLW#05 - PodCastr</title>
-        </Head>
+        <Head></Head>
         <body className='bg-gray-50 text-gray-500'>
           <Main />
           <NextScript />
