@@ -1,8 +1,11 @@
 import { GetStaticProps } from "next"
+import Image from 'next/image'
 import { format, parseISO } from 'date-fns'
 import { api } from "@/services/api";
 import ptBR from "date-fns/locale/pt-BR";
 import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString";
+
+import PlayGreen from '../../public/play-green.svg'
 
 type Episode = {
   id: string;
@@ -37,9 +40,28 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
             latestEpisodes.map(episode => {
               return (
                 <li key={episode.id}>
-                  <a href="">
-                    {episode.title}
-                  </a>
+                  <Image
+                    src={episode.thumbnail}
+                    alt={episode.title}
+                    // Esta width e height não são a altura que será mostrado em tela
+                    width={192}
+                    height={192}
+                  />
+
+                  <div>
+                    <a href="">{episode.title}</a>
+                    <p>{episode.members}</p>
+                    <span>{episode.published_at}</span>
+                    <span>{episode.durationAsString}</span>
+                  </div>
+
+                  <button>
+                    <Image
+                      src={PlayGreen}
+                      alt={'Botão de play para tocar o episódio'}
+                    />
+                  </button>
+
                 </li>
               )
             })
