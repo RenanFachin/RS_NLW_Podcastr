@@ -12,6 +12,9 @@ import { api } from "@/services/api";
 import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString";
 
 import PlayGreen from '../../public/play-green.svg'
+import { useContext } from 'react';
+import { PlayerContext } from '@/contexts/PlayerContexts';
+
 
 type Episode = {
   id: string;
@@ -31,6 +34,8 @@ type HomeProps = {
 }
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+
+  const { play } = useContext(PlayerContext)
 
   return (
     <div className="px-16 h-[calc(100vh_-_7rem)] overflow-y-scroll">
@@ -74,7 +79,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                     </span>
                   </div>
 
-                  <button className="absolute right-8 bottom-8 w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
+                  <button
+                    onClick={() => play(episode)}
+                    className="absolute right-8 bottom-8 w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
                     <Image
                       className="w-6 h-6"
                       src={PlayGreen}
