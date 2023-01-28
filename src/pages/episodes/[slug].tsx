@@ -8,6 +8,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 type Episode = {
     id: string;
@@ -89,10 +90,28 @@ export default function Episode({ episode }: EpisodeProps) {
     )
 }
 
-
+// GetStaticPaths é obrigatório em rotas dinâmicas e que tenha o [] no nome do arquivo
 export const getStaticPaths: GetStaticPaths = async () => {
+    // Fazendo a busca pelos 2 episodios mais assistidos para poder deixar pré rendeirizada pela build
+    const { data } = await api.get('episodes', {
+        params: {
+            _limit: 2,
+            _sort: 'published_at',
+            _order: 'desc'
+        }
+    });
+
+    const paths = data.map((episode: Episode) => {
+        return {
+            params: {
+                slug: episode.id
+            }
+        }
+    });
+
     return {
-        paths: [],
+        paths,
+        // Blocking só carrega a página pro usuário depois dele ser carregado pelo next
         fallback: 'blocking',
     };
 };
