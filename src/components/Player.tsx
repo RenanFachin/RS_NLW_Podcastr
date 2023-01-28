@@ -9,6 +9,9 @@ import Repeat from '../../public/repeat.svg'
 import { useContext } from "react"
 import { PlayerContext } from "@/contexts/PlayerContexts"
 
+import 'rc-slider/assets/index.css';
+import Slider from "rc-slider"
+
 export function Player() {
     const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
 
@@ -59,45 +62,58 @@ export function Player() {
                 )
             }
 
-            <footer className="self-stretch opacity-40">
+            <footer className={`self-stretch ${!episode ? 'opacity-40' : ''}`}>
                 <div className="flex items-center gap-4 text-sm">
                     <span className="inline-block w-16 text-center">00:00</span>
                     <div className="flex-1">
-                        <div className="w-full h-1 bg-purple-300 border-2" />
+                        {episode ? (
+                            <Slider
+                                trackStyle={{ backgroundColor: '#04d361' }}
+                                railStyle={{ backgroundColor: '#9f75ff' }}
+                                handleStyle={{ borderColor: '#04d361', borderWidth: 4 }}
+                            />
+                        ) : (
+                            <div className="w-full h-1 bg-purple-300 border-2" />
+                        )}
                     </div>
                     <span className="inline-block w-16 text-center">00:00</span>
                 </div>
 
                 <div className="flex items-center justify-center mt-10 gap-6">
-                    <button type="button" className="bg-transparent">
+                    <button
+                        type="button"
+                        className={`bg-transparent ${!episode ? 'cursor-not-allowed' : ''}`}
+                    >
                         <Image
                             src={Shuffle}
                             alt="Embaralhar"
                         />
                     </button>
 
-                    <button>
+                    <button className={`${!episode ? 'cursor-not-allowed' : ''}`}>
                         <Image
                             src={PlayPrevious}
                             alt="Tocar anterior"
                         />
                     </button>
 
-                    <button className="w-16 h-16 rounded-2xl bg-purple-400 flex items-center justify-center">
+                    <button
+                        className={`w-16 h-16 rounded-2xl bg-purple-400 flex items-center justify-center ${!episode ? 'cursor-not-allowed' : ''}`}
+                    >
                         <Image
                             src={Play}
                             alt="Tocar"
                         />
                     </button>
 
-                    <button>
+                    <button className={`${!episode ? 'cursor-not-allowed' : ''}`}>
                         <Image
                             src={PlayNext}
                             alt="Tocar próxima"
                         />
                     </button>
 
-                    <button>
+                    <button className={`${!episode ? 'cursor-not-allowed' : ''}`}>
                         <Image
                             src={Repeat}
                             alt="Repetir"
