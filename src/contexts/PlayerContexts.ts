@@ -13,7 +13,9 @@ type Episode = {
 type PlayerContextData = {
     episodeList: Episode[];
     currentEpisodeIndex: number;
+    isPlaying: boolean;
     play: (episode: Episode) => void;
+    togglePlay: () => void
 }
 
 // {} as PlayerContextData é para mostrar a estrutura de dados a serem recebidos pelo contexto

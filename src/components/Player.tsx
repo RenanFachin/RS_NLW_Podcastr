@@ -4,16 +4,34 @@ import Playing from '../../public/playing.svg'
 import Shuffle from '../../public/shuffle.svg'
 import PlayPrevious from '../../public/play-previous.svg'
 import Play from '../../public/play.svg'
+import Pause from '../../public/pause.svg'
 import PlayNext from '../../public/play-next.svg'
 import Repeat from '../../public/repeat.svg'
-import { useContext } from "react"
+import { useContext, useEffect, useRef } from "react"
 import { PlayerContext } from "@/contexts/PlayerContexts"
 
 import 'rc-slider/assets/index.css';
 import Slider from "rc-slider"
 
 export function Player() {
-    const { episodeList, currentEpisodeIndex } = useContext(PlayerContext)
+    const audioRef = useRef<HTMLAudioElement>(null)
+
+
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay } = useContext(PlayerContext)
+
+    useEffect(() => {
+        if(!audioRef.current) {
+            return
+        }
+
+        if(isPlaying){
+            audioRef.current.play()
+        } else {
+            audioRef.current.pause()
+        }
+
+    }, [isPlaying])
+
 
     // determinando o episódio que está tocando
     const episode = episodeList[currentEpisodeIndex]
@@ -79,10 +97,21 @@ export function Player() {
                     <span className="inline-block w-16 text-center">00:00</span>
                 </div>
 
+
+                {/* Utilizando aúdios */}
+                {episode && (
+                    <audio
+                        src={episode.url}
+                        ref={audioRef}
+                        autoPlay
+                    />
+                )}
+
                 <div className="flex items-center justify-center mt-10 gap-6">
                     <button
                         type="button"
-                        className={`bg-transparent ${!episode ? 'cursor-not-allowed' : ''}`}
+                        disabled={!episode}
+                        className={`bg-transparent disabled:cursor-default enabled:hover:brightness-90 transition-all`}
                     >
                         <Image
                             src={Shuffle}
@@ -90,7 +119,10 @@ export function Player() {
                         />
                     </button>
 
-                    <button className={`${!episode ? 'cursor-not-allowed' : ''}`}>
+                    <button
+                        disabled={!episode}
+                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all`}
+                    >
                         <Image
                             src={PlayPrevious}
                             alt="Tocar anterior"
@@ -98,22 +130,37 @@ export function Player() {
                     </button>
 
                     <button
-                        className={`w-16 h-16 rounded-2xl bg-purple-400 flex items-center justify-center ${!episode ? 'cursor-not-allowed' : ''}`}
+                        disabled={!episode}
+                        className={`w-16 h-16 rounded-2xl bg-purple-400 flex items-center justify-center disabled:cursor-default hover:brightness-95 transition-all enabled:hover:brightness-90`}
+                        onClick={togglePlay}
                     >
-                        <Image
-                            src={Play}
-                            alt="Tocar"
-                        />
+                        {isPlaying ?
+                            <Image
+                                src={Pause}
+                                alt="Pausar"
+                            />
+                            :
+                            <Image
+                                src={Play}
+                                alt="Tocar"
+                            />
+                        }
                     </button>
 
-                    <button className={`${!episode ? 'cursor-not-allowed' : ''}`}>
+                    <button
+                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all`}
+                        disabled={!episode}
+                    >
                         <Image
                             src={PlayNext}
                             alt="Tocar próxima"
                         />
                     </button>
 
-                    <button className={`${!episode ? 'cursor-not-allowed' : ''}`}>
+                    <button
+                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all`}
+                        disabled={!episode}
+                    >
                         <Image
                             src={Repeat}
                             alt="Repetir"

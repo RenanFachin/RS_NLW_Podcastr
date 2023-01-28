@@ -22,10 +22,17 @@ export default function App({ Component, pageProps }: AppProps) {
   // Criando estados para poder manipular os valores de variáveis
   const [episodeList, setEpisodeList] = useState([])
   const [currentEpisodeIndex, setCurrentEpisodeIndex] = useState(0)
+  const [isPlaying, setIsPlaying] = useState(false)
 
   function play(episode) {
     setEpisodeList([episode])
     setCurrentEpisodeIndex(0)
+    setIsPlaying(true)
+  }
+
+  function togglePlay(){
+    setIsPlaying(!isPlaying)
+
   }
 
   return (
@@ -34,7 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
         episodeList: episodeList,
         currentEpisodeIndex: currentEpisodeIndex,
         // Passando a função play
-        play
+        play,
+        isPlaying,
+        togglePlay
       }}
     >
       <div className={`${inter.variable} ${lexend.variable} font-sans flex`}>
