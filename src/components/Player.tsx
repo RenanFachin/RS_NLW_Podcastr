@@ -17,7 +17,7 @@ export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
 
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious, isLooping, toggleLoop } = usePlayer()
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious, isLooping, toggleLoop, toggleShuffle, isShuffling } = usePlayer()
 
     useEffect(() => {
         if (!audioRef.current) {
@@ -113,8 +113,9 @@ export function Player() {
                 <div className="flex items-center justify-center mt-10 gap-6">
                     <button
                         type="button"
-                        disabled={!episode}
-                        className={`bg-transparent disabled:cursor-default enabled:hover:brightness-90 transition-all`}
+                        disabled={!episode || episodeList.length === 1}
+                        className={`bg-transparent disabled:opacity-50 disabled:cursor-default enabled:hover:brightness-90 transition-all ${isShuffling ? `invert-[0.75] sepia-0 saturate-150 hue-rotate-60 hover:brightness-[60]` : ''}`}
+                        onClick={toggleShuffle}
                     >
                         <Image
                             src={Shuffle}
