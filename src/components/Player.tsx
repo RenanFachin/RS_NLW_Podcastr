@@ -17,7 +17,7 @@ export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
 
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay } = useContext(PlayerContext)
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState } = useContext(PlayerContext)
 
     useEffect(() => {
         if(!audioRef.current) {
@@ -104,6 +104,8 @@ export function Player() {
                         src={episode.url}
                         ref={audioRef}
                         autoPlay
+                        onPlay={() => setPlayingState(true)} // play com teclado
+                        onPause={() => setPlayingState(false)} // pausando
                     />
                 )}
 
