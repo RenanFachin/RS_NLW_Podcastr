@@ -7,14 +7,29 @@ import Play from '../../public/play.svg'
 import Pause from '../../public/pause.svg'
 import PlayNext from '../../public/play-next.svg'
 import Repeat from '../../public/repeat.svg'
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import 'rc-slider/assets/index.css';
 import Slider from "rc-slider"
 import { usePlayer } from "@/hooks/usePlayer"
+import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString"
 
 export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
+
+    const [progress, setProgress] = useState(0)
+
+    function setupProgressListener() {
+        if (audioRef.current !== null) {
+            audioRef.current.currentTime = 0
+
+            audioRef.current.addEventListener('timeupdate', () => {
+                if (audioRef.current !== null) {
+                    setProgress(Math.floor(audioRef.current.currentTime));
+                }
+            })
+        }
+    }
 
 
     const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious, isLooping, toggleLoop, toggleShuffle, isShuffling } = usePlayer()
@@ -82,10 +97,14 @@ export function Player() {
 
             <footer className={`self-stretch ${!episode ? 'opacity-40' : ''}`}>
                 <div className="flex items-center gap-4 text-sm">
-                    <span className="inline-block w-16 text-center">00:00</span>
+                    <span className="inline-block w-16 text-center">
+                        {convertDurationToTimeString(progress)}
+                    </span>
                     <div className="flex-1">
                         {episode ? (
                             <Slider
+                                max={episode.duration}
+                                value={progress}
                                 trackStyle={{ backgroundColor: '#04d361' }}
                                 railStyle={{ backgroundColor: '#9f75ff' }}
                                 handleStyle={{ borderColor: '#04d361', borderWidth: 4 }}
@@ -94,7 +113,9 @@ export function Player() {
                             <div className="w-full h-1 bg-purple-300 border-2" />
                         )}
                     </div>
-                    <span className="inline-block w-16 text-center">00:00</span>
+                    <span className="inline-block w-16 text-center">
+                        {convertDurationToTimeString(episode?.duration ?? 0)}
+                    </span>
                 </div>
 
 
@@ -107,6 +128,7 @@ export function Player() {
                         loop={isLooping}
                         onPlay={() => setPlayingState(true)} // play com teclado
                         onPause={() => setPlayingState(false)} // pausando
+                        onLoadedMetadata={setupProgressListener}
                     />
                 )}
 
