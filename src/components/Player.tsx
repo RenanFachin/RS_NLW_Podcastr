@@ -17,7 +17,7 @@ export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
 
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious } = usePlayer()
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious, isLooping, toggleLoop } = usePlayer()
 
     useEffect(() => {
         if (!audioRef.current) {
@@ -104,6 +104,7 @@ export function Player() {
                         src={episode.url}
                         ref={audioRef}
                         autoPlay
+                        loop={isLooping}
                         onPlay={() => setPlayingState(true)} // play com teclado
                         onPause={() => setPlayingState(false)} // pausando
                     />
@@ -162,8 +163,9 @@ export function Player() {
                     </button>
 
                     <button
-                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all`}
+                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all ${isLooping ? `invert-[0.75] sepia-0 saturate-150 hue-rotate-60 hover:brightness-[60]` : ''}`}
                         disabled={!episode}
+                        onClick={toggleLoop}
                     >
                         <Image
                             src={Repeat}
