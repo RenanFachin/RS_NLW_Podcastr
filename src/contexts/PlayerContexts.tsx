@@ -15,8 +15,13 @@ type PlayerContextData = {
     currentEpisodeIndex: number;
     isPlaying: boolean;
     play: (episode: Episode) => void;
-    togglePlay: () => void
-    setPlayingState: (setPlayingState: boolean) => void
+    togglePlay: () => void;
+    setPlayingState: (setPlayingState: boolean) => void;
+    playList: (list: Episode[], index: number) => void;
+    playNext: () => void;
+    playPrevious: () => void;
+    hasNext: boolean;
+    hasPrevious: Boolean;
 }
 
 // {} as PlayerContextData é para mostrar a estrutura de dados a serem recebidos pelo contexto
@@ -39,6 +44,34 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
         setIsPlaying(true)
     }
 
+
+    // 12 episodios
+    // ex: play no 6 então, o index é 6 e o list é o 12
+    function playList(list: Episode[], index: number) {
+        setEpisodeList(list)
+        setCurrentEpisodeIndex(index)
+        setIsPlaying(true)
+    }
+
+    // Constantes para gerenciar os botões de previous e next para qnd não houver previous ou next na episodeList
+    const hasPrevious = currentEpisodeIndex > 0
+    const hasNext = (currentEpisodeIndex + 1) < episodeList.length
+
+    function playNext() {
+        // validação para ver se o episódio é o ultimo e não tem outro após
+        if (hasNext) {
+            setCurrentEpisodeIndex(currentEpisodeIndex + 1)
+        }
+
+    }
+
+    function playPrevious() {
+        if (hasPrevious) {
+            setCurrentEpisodeIndex(currentEpisodeIndex - 1)
+        }
+
+    }
+
     function togglePlay() {
         setIsPlaying(!isPlaying)
     }
@@ -56,10 +89,19 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
                 play,
                 isPlaying,
                 togglePlay,
-                setPlayingState
+                setPlayingState,
+                playList,
+                playNext,
+                playPrevious,
+                hasNext,
+                hasPrevious
             }}
         >
             {children}
         </PlayerContext.Provider>
     )
 }
+
+
+
+

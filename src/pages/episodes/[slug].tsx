@@ -1,3 +1,5 @@
+import { PlayerContext } from "@/contexts/PlayerContexts";
+import { usePlayer } from "@/hooks/usePlayer";
 import { api } from "@/services/api";
 import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString";
 
@@ -8,6 +10,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
 
 type Episode = {
     id: string;
@@ -26,6 +29,9 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
+
+    const { play } = usePlayer()
+
     return (
         <div className="max-w-3xl py-12 px-8 mx-auto">
             <div className="relative">
@@ -53,6 +59,8 @@ export default function Episode({ episode }: EpisodeProps) {
                 <button
                     type="button"
                     className="w-12 h-12 rounded-xl absolute z-10 hover:brightness-90 transition-all right-0 top-1/2 bg-green-500 flex items-center justify-center translate-x-1/2 -translate-y-1/2"
+                    // Dando play passando como parâmetro o episódio atual
+                    onClick={() => play(episode)}
                 >
                     <img
                         src="/play.svg"

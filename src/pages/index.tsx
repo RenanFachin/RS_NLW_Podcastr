@@ -12,8 +12,7 @@ import { api } from "@/services/api";
 import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString";
 
 import PlayGreen from '../../public/play-green.svg'
-import { useContext } from 'react';
-import { PlayerContext } from '@/contexts/PlayerContexts';
+import { usePlayer } from '@/hooks/usePlayer';
 
 
 type Episode = {
@@ -35,7 +34,10 @@ type HomeProps = {
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
-  const { play } = useContext(PlayerContext)
+  const { playList } = usePlayer()
+
+  // criar uma listagem com a lista de episódios
+  const episodeList = [...latestEpisodes, ...allEpisodes]
 
   return (
     <div className="px-16 h-[calc(100vh_-_7rem)] overflow-y-scroll">
@@ -47,7 +49,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
         {/* Pegando apenas os 2 últimos episódios - DICA: fazer dois returns diferentes da API*/}
         <ul className="list-none grid grid-cols-2 gap-6">
           {
-            latestEpisodes.map(episode => {
+            latestEpisodes.map((episode, index) => {
               return (
                 <li key={episode.id} className="bg-white border border-gray-100 p-5 rounded-3xl relative flex items-center">
                   <Image
@@ -80,7 +82,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   </div>
 
                   <button
-                    onClick={() => play(episode)}
+                    onClick={() => playList(episodeList, index)}
                     className="absolute right-8 bottom-8 w-10 h-10 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
                     <Image
                       className="w-6 h-6"
@@ -138,7 +140,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
           </thead>
 
           <tbody>
-            {allEpisodes.map(episode => {
+            {allEpisodes.map((episode, index) => {
               return (
                 <tr key={episode.id}>
                   <td>
@@ -175,7 +177,10 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   </td>
 
                   <td>
-                    <button className="w-8 h-8 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
+                    <button 
+                    //index + latestEpisodes.length é para ajustar a posição do index no array gerado com os 2 outros array de episódios
+                    onClick={() => playList(episodeList, index + latestEpisodes.length)}
+                    className="w-8 h-8 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
                       <Image
                         className="w-4 h-4"
                         src={PlayGreen}

@@ -7,24 +7,24 @@ import Play from '../../public/play.svg'
 import Pause from '../../public/pause.svg'
 import PlayNext from '../../public/play-next.svg'
 import Repeat from '../../public/repeat.svg'
-import { useContext, useEffect, useRef } from "react"
-import { PlayerContext } from "@/contexts/PlayerContexts"
+import { useEffect, useRef } from "react"
 
 import 'rc-slider/assets/index.css';
 import Slider from "rc-slider"
+import { usePlayer } from "@/hooks/usePlayer"
 
 export function Player() {
     const audioRef = useRef<HTMLAudioElement>(null)
 
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState } = useContext(PlayerContext)
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious } = usePlayer()
 
     useEffect(() => {
-        if(!audioRef.current) {
+        if (!audioRef.current) {
             return
         }
 
-        if(isPlaying){
+        if (isPlaying) {
             audioRef.current.play()
         } else {
             audioRef.current.pause()
@@ -122,8 +122,9 @@ export function Player() {
                     </button>
 
                     <button
-                        disabled={!episode}
-                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all`}
+                        disabled={!episode || !hasPrevious}
+                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all disabled:opacity-50`}
+                        onClick={playPrevious}
                     >
                         <Image
                             src={PlayPrevious}
@@ -150,8 +151,9 @@ export function Player() {
                     </button>
 
                     <button
-                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all`}
-                        disabled={!episode}
+                        className={`disabled:cursor-default enabled:hover:brightness-90 transition-all disabled:opacity-50`}
+                        disabled={!episode || !hasNext}
+                        onClick={playNext}
                     >
                         <Image
                             src={PlayNext}
