@@ -3,9 +3,9 @@
 </div>
 <br>
 
-<div style="display: flex; justify-content:center; gap: 30px">
-  <img alt="Player de música" src="./public/ImageGithub.svg" width="80%">
-</div><br><br><br>
+<p align="center">
+  <img alt="Player de música Podcastr" src="./public/ImageGithub.svg" width="100%">
+</p><br><br><br>
 
 # NLW#05 ReactJS - PODCASTR
 Aplicação front-end desenvolvida utilizando o NextJS com conceitos de Static Site Generation (SSG), criando uma api local com o json-server e aplicando conceitos de de context API e hooks com a utilização de typescript. <br>
