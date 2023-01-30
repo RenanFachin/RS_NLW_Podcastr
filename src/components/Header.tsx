@@ -6,6 +6,8 @@ import ptBR from "date-fns/locale/pt-BR"
 import Switch from 'react-switch'
 import { useTheme } from 'next-themes'
 import { Moon, Sun } from 'phosphor-react'
+import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 
 export function Header() {
@@ -14,22 +16,34 @@ export function Header() {
     })
 
     const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
 
     function handleTheme() {
-        const temaAtual = theme === 'light' ? 'dark' : 'light'
-        console.log(temaAtual)
+        const currentTheme = theme === 'light' ? 'dark' : 'light'
+        console.log(currentTheme)
 
-        setTheme(temaAtual)
+        setTheme(currentTheme)
     }
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    if (!mounted) {
+        return null
+    }
+
 
     return (
         <header
             className="bg-white h-28 flex items-center py-8 px-16 border border-solid border-gray-100 dark:bg-darkMode-headerBackground dark:text-white"
         >
-            <Image
-                src={Logo}
-                alt=""
-            />
+            <Link href={'/'}>
+                <Image
+                    src={Logo}
+                    alt="Logo do Podcastr"
+                />
+            </Link>
 
             <p className="ml-8 py-1 pl-8 border-l border-l-gray-100">
                 O melhor para você ouvir, sempre
