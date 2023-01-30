@@ -14,6 +14,7 @@ import { convertDurationToTimeString } from "@/utils/convertDurationToTimeString
 
 import PlayGreen from '../../public/play-green.svg'
 import { usePlayer } from '@/hooks/usePlayer';
+import { useTheme } from 'next-themes';
 
 
 type Episode = {
@@ -41,14 +42,14 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
   const episodeList = [...latestEpisodes, ...allEpisodes]
 
   return (
-    <div className="px-16 h-[calc(100vh_-_7rem)] overflow-y-scroll">
+    <div className="px-16 h-[calc(100vh_-_7rem)] overflow-y-scroll dark:bg-darkMode-background dark:text-white">
 
       <Head>
         <title>Home | Podcastr</title>
       </Head>
 
       <section>
-        <h2 className="mt-12 mb-6">
+        <h2 className="mt-12 mb-6 dark:text-white">
           Ultimos lançamentos
         </h2>
 
@@ -57,9 +58,9 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
           {
             latestEpisodes.map((episode, index) => {
               return (
-                <li key={episode.id} className="bg-white border border-gray-100 p-5 rounded-3xl relative flex items-center">
+                <li key={episode.id} className="bg-white border border-gray-100 p-5 rounded-3xl relative flex items-center dark:bg-darkMode-background">
                   <Image
-                    className="w-24 h-24 object-cover rounded-2xl"
+                    className="w-24 h-24 object-cover rounded-2xl "
                     src={episode.thumbnail}
                     alt={episode.title}
                     // Esta width e height não são a altura que será mostrado em tela
@@ -69,7 +70,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
                   <div className="flex-1 ml-4">
                     <Link href={`/episodes/${episode.id}`} legacyBehavior>
-                      <a className="block text-gray-800 font-Lexend font-semibold leading-6 hover:underline">
+                      <a className="block text-gray-800 font-Lexend font-semibold leading-6 hover:underline dark:text-white">
                         {episode.title}
                       </a>
                     </Link>
@@ -107,7 +108,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
 
       <section className="pb-8">
-        <h2 className="my-8">
+        <h2 className="my-8 dark:text-white">
           Todos os episódios
         </h2>
 
@@ -116,32 +117,32 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
           <thead>
             <tr>
               <th
-                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left dark:text-white">
 
               </th>
 
               <th
-                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left dark:text-white">
                 Podcast
               </th>
 
               <th
-                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left dark:text-white">
                 Integrantes
               </th>
 
               <th
-                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left dark:text-white">
                 Data
               </th>
 
               <th
-                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left">
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left dark:text-white">
                 Duração
               </th>
 
               <th
-                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left"></th>
+                className="text-gray-200 uppercase font-medium text-xs font-Lexend text-left dark:text-white"></th>
             </tr>
           </thead>
 
@@ -163,7 +164,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   <td>
                     <Link href={`/episodes/${episode.id}`} legacyBehavior>
                       <a
-                        className="text-gray-800 font-Lexend font-semibold leading-6 text-base hover:underline"
+                        className="text-gray-800 font-Lexend font-semibold leading-6 text-base hover:underline dark:text-white"
                       >
                         {episode.title}
                       </a>

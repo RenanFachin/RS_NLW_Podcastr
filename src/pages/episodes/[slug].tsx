@@ -76,16 +76,16 @@ export default function Episode({ episode }: EpisodeProps) {
             </div>
 
             <header className="pb-4 border-b border-b-gray-100">
-                <h1 className="my-7">
+                <h1 className="my-3 dark:text-white">
                     {episode.title}
                 </h1>
 
 
-                <span className="inline-block text-sm">
+                <span className="inline-block text-sm dark:text-white">
                     {episode.members}
                 </span>
 
-                <span className="inline-block text-sm ml-4 pl-1 relative">
+                <span className="inline-block text-sm ml-4 pl-1 relative dark:text-white">
                     - {episode.publishedAt}
                 </span>
 
@@ -95,7 +95,7 @@ export default function Episode({ episode }: EpisodeProps) {
             </header>
 
             <div
-                className="mt-6 leading-6 text-gray-800"
+                className="mt-3 leading-7 text-gray-800 dark:text-white text-sm"
                 dangerouslySetInnerHTML={{ __html: episode.description }}
             />
 

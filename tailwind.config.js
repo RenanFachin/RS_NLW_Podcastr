@@ -5,6 +5,9 @@ module.exports = {
   content: [
     "./src/**/*.tsx",
   ],
+  darkMode:
+    'class'
+  ,
   theme: {
     extend: {
       maxWidth: {
@@ -35,13 +38,17 @@ module.exports = {
         800: "#494D4B",
       },
       green: {
-        500: "#04D361" 
+        500: "#04D361"
       },
       purple: {
         300: "#9F75FF",
         400: "#9164FA",
         500: "#8257E5",
         800: "#6F48C9",
+      },
+      darkMode: {
+        background: "#41414D",
+        headerBackground: "#8c8a90"
       }
     }
   },

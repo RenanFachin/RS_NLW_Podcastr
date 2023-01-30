@@ -7,6 +7,10 @@ import { Player } from "@/components/Player"
 import { Inter, Lexend } from '@next/font/google'
 import { PlayerContextProvider } from '@/contexts/PlayerContexts'
 
+import { ThemeProvider } from 'next-themes'
+import { useTheme } from 'next-themes'
+
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -19,16 +23,18 @@ const lexend = Lexend({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <PlayerContextProvider>
-      <div className={`${inter.variable} ${lexend.variable} font-sans flex`}>
+    <ThemeProvider attribute='class'>
+      <PlayerContextProvider>
+        <div className={`${inter.variable} ${lexend.variable} font-sans flex`}>
 
-        <main className='flex-1'>
-          <Header />
-          <Component {...pageProps} />
-        </main>
+          <main className='flex-1'>
+            <Header />
+            <Component {...pageProps} />
+          </main>
 
-        <Player />
-      </div>
-    </PlayerContextProvider>
+          <Player />
+        </div>
+      </PlayerContextProvider>
+    </ThemeProvider>
   )
 }

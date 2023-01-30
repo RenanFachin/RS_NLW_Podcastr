@@ -39,6 +39,9 @@ npm run dev
   - `tailwindcss`
   - `datefns`
   - `rc-slider`
+  - `react-switch`
+  - `phosphor-react`
+  - `next-theme`
 
 ## ✔️ Autores
 
