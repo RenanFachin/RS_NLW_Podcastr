@@ -6,6 +6,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import { GetStaticProps } from "next"
 import Link from "next/link";
 import Image from 'next/image'
+import Head from 'next/head';
 
 // utils
 import { api } from "@/services/api";
@@ -41,6 +42,11 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
 
   return (
     <div className="px-16 h-[calc(100vh_-_7rem)] overflow-y-scroll">
+
+      <Head>
+        <title>Home | Podcastr</title>
+      </Head>
+
       <section>
         <h2 className="mt-12 mb-6">
           Ultimos lançamentos
@@ -177,10 +183,10 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   </td>
 
                   <td>
-                    <button 
-                    //index + latestEpisodes.length é para ajustar a posição do index no array gerado com os 2 outros array de episódios
-                    onClick={() => playList(episodeList, index + latestEpisodes.length)}
-                    className="w-8 h-8 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
+                    <button
+                      //index + latestEpisodes.length é para ajustar a posição do index no array gerado com os 2 outros array de episódios
+                      onClick={() => playList(episodeList, index + latestEpisodes.length)}
+                      className="w-8 h-8 bg-white border border-gray-100 rounded-xl flex items-center justify-center hover:brightness-90 transition-all">
                       <Image
                         className="w-4 h-4"
                         src={PlayGreen}

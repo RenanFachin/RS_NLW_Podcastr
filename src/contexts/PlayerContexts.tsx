@@ -26,6 +26,7 @@ type PlayerContextData = {
     playPrevious: () => void;
     hasNext: boolean;
     hasPrevious: Boolean;
+    clearPlayerState: () => void;
 }
 
 // {} as PlayerContextData é para mostrar a estrutura de dados a serem recebidos pelo contexto
@@ -63,7 +64,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
 
     // Constantes para gerenciar os botões de previous e next para qnd não houver previous ou next na episodeList
     const hasPrevious = currentEpisodeIndex > 0
-    const hasNext = (currentEpisodeIndex + 1) < episodeList.length
+    const hasNext = isShuffling || (currentEpisodeIndex + 1) < episodeList.length
 
     function playNext() {
 
@@ -76,9 +77,6 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
             // validação para ver se o episódio é o ultimo e não tem outro após
             setCurrentEpisodeIndex(currentEpisodeIndex + 1)
         }
-
-
-
 
     }
 
@@ -105,6 +103,11 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
         setIsPlaying(isPlayingState)
     }
 
+    function clearPlayerState(){
+        setEpisodeList([])
+        setCurrentEpisodeIndex(0)
+    }
+
     return (
         <PlayerContext.Provider
             value={{
@@ -123,7 +126,8 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
                 hasPrevious,
                 toggleLoop,
                 isShuffling,
-                toggleShuffle
+                toggleShuffle,
+                clearPlayerState
             }}
         >
             {children}

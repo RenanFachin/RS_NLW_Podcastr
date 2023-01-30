@@ -4,7 +4,9 @@ export default class MyDocument extends Document {
   render(){
     return (
       <Html lang="en">
-        <Head></Head>
+        <Head>
+          <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+        </Head>
         <body className='bg-gray-50 text-gray-500'>
           <Main />
           <NextScript />

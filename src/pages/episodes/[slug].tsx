@@ -8,6 +8,7 @@ import { format, parseISO } from 'date-fns'
 import ptBR from "date-fns/locale/pt-BR";
 
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -34,6 +35,11 @@ export default function Episode({ episode }: EpisodeProps) {
 
     return (
         <div className="max-w-3xl py-12 px-8 mx-auto">
+
+            <Head>
+                <title>{episode.title} | Podcastr</title>
+            </Head>
+
             <div className="relative">
                 <Link href={'/'}>
                     <button

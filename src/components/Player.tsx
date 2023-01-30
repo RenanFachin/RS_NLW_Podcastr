@@ -31,8 +31,23 @@ export function Player() {
         }
     }
 
+    function handleSeek(amount: number) {
+        if (audioRef.current !== null) {
+            // amount é a duração que a pessoa jogou a bolinha do slider
+            audioRef.current.currentTime = amount
+            setProgress(amount)
+        }
+    }
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious, isLooping, toggleLoop, toggleShuffle, isShuffling } = usePlayer()
+    function handleEpisodeEnded(){
+        if(hasNext) {
+            playNext()
+        } else {
+            clearPlayerState()
+        }
+    }
+
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState, playNext, playPrevious, hasNext, hasPrevious, isLooping, toggleLoop, toggleShuffle, isShuffling, clearPlayerState } = usePlayer()
 
     useEffect(() => {
         if (!audioRef.current) {
@@ -103,8 +118,9 @@ export function Player() {
                     <div className="flex-1">
                         {episode ? (
                             <Slider
-                                max={episode.duration}
-                                value={progress}
+                                max={episode.duration} // tempo máximo
+                                value={progress} // tempo atual
+                                onChange={handleSeek} // possibilidade de arrastar
                                 trackStyle={{ backgroundColor: '#04d361' }}
                                 railStyle={{ backgroundColor: '#9f75ff' }}
                                 handleStyle={{ borderColor: '#04d361', borderWidth: 4 }}
@@ -125,6 +141,7 @@ export function Player() {
                         src={episode.url}
                         ref={audioRef}
                         autoPlay
+                        onEnded={handleEpisodeEnded}
                         loop={isLooping}
                         onPlay={() => setPlayingState(true)} // play com teclado
                         onPause={() => setPlayingState(false)} // pausando
